@@ -37,18 +37,18 @@ Will produce:
 ```json
 [
     {
-        model: "RM2 Pro Plus",
-        name: "Living Room",
-        ip: "192.168.88.15",
-        mac: "34:ea:cc:cc:cc:bc",
-        temperature: "22.0"
+        "model": "RM2 Pro Plus",
+        "name": "Living Room",
+        "ip": "192.168.88.15",
+        "mac": "34:ea:cc:cc:cc:bc",
+        "temperature": "22.0"
     },
     {
-        model: "RM2 Pro Plus",
-        name: "Sleeping Room",
-        ip: "192.168.88.14",
-        mac: "34:ea:cc:cc:cc:bf",
-        temperature: "21.7"
+        "model": "RM2 Pro Plus",
+        "name": "Sleeping Room",
+        "ip": "192.168.88.14",
+        "mac": "34:ea:cc:cc:cc:bf",
+        "temperature": "21.7"
     }
 ]
 ```

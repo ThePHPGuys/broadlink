@@ -62,7 +62,7 @@ $device->authenticate();
 echo $device->getTemperature();
 ```
 
-Draft implementation of Broadlink Catalog Cloud
+### Draft implementation of Broadlink Catalog Cloud
 
 ```php
 use TPG\Broadlink\Cloud\Catalog;

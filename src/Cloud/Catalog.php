@@ -18,6 +18,10 @@ class Catalog
         $this->savePath = $savePath;
     }
 
+    /**
+     * @param $val
+     * @return string
+     */
     private function getToken($val){
         $salt = "Broadlink:290";
         $token = $salt.$val;
@@ -26,6 +30,9 @@ class Catalog
         return md5($encodedToken);
     }
 
+    /**
+     * @return array
+     */
     private function createSignedQuery():array {
         $timestamp = ceil(microtime(true)*1000);
         $query['timestamp'] = $timestamp;
@@ -33,6 +40,11 @@ class Catalog
         return $query;
     }
 
+    /**
+     * Search remotes
+     * @param $key
+     * @return CatalogRemote[]
+     */
     public function search($key){
         $query = $this->createSignedQuery();
         $query['method'] = 'query';
@@ -48,22 +60,41 @@ class Catalog
         return $searchResult;
     }
 
+    /**
+     * @return string
+     */
     public function getSavePath(){
         return $this->savePath;
     }
 
+    /**
+     * @param $path
+     * @return bool
+     */
     public function isRemoteExists($path){
         return file_exists($this->getRemotePath($path));
     }
 
+    /**
+     * @param $path
+     * @return string
+     */
     private function getRemoteFileName($path):string {
         return md5($path).'.zip';
     }
 
+    /**
+     * @param $path
+     * @return string
+     */
     private function getRemotePath($path){
         return $this->getSavePath().$this->getRemoteFileName($path);
     }
 
+    /**
+     * @param $path
+     * @return bool
+     */
     public function download($path){
         if($this->isRemoteExists($path)){
             return true;

@@ -61,3 +61,20 @@ $device = new RMDevice('192.168.88.15','34:ea:cc:cc:cc:bc');
 $device->authenticate();
 echo $device->getTemperature();
 ```
+
+Draft implementation of Broadlink Catalog Cloud
+
+```php
+use TPG\Broadlink\Cloud\Catalog;
+
+$catalog = new Catalog('/path/where/you/want/to/save/remotes');
+$remotes = $catalog->search('Samsung');
+
+//Download first remote
+print_r($remotes[0]->download());
+
+//Or download all found remotes
+foreach($remotes as $remote){
+    $remote->download();
+}
+```

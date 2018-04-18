@@ -43,6 +43,6 @@ class DeviceResolver implements DeviceResolverInterface
             return \SP2::class;
         }
 
-        throw new \Exception('Unknown device');
+        throw new \Exception('Unknown device:'.dechex($deviceId));
     }
 }

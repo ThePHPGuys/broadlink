@@ -19,7 +19,7 @@ class DeviceResolver implements DeviceResolverInterface
             return MP1Device::class;
         }
 
-        if (\in_array($deviceId, [0x2712, 0x2737, 0x273d, 0x2783, 0x277c, 0x272a, 0x2787, 0x278b, 0x278f], true)) {
+        if (\in_array($deviceId, [0x2712, 0x2737, 0x273d, 0x2783, 0x277c, 0x272a, 0x2787, 0x278b, 0x278f, 0x279d], true)) {
             return RMDevice::class;
         }
 

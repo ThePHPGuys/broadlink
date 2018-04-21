@@ -6,25 +6,45 @@ namespace TPG\Broadlink\Device;
 use TPG\Broadlink\Cipher\Cipher;
 use TPG\Broadlink\Cipher\CipherInterface;
 
-final class BroadcastDevice implements DeviceInterface
+class Device implements DeviceInterface
 {
+
+    /**
+     * @var string
+     */
+    private $ip;
+    /**
+     * @var string
+     */
+    private $mac;
+
+    public function __construct(string $ip,string $mac)
+    {
+        $this->ip = $ip;
+        $this->mac = $mac;
+    }
+
     public function getMac(): string
     {
-        return '';
+        return $this->mac;
     }
 
     public function getIP(): string
     {
-        return '255.255.255.255';
+        return $this->ip;
     }
 
     public function getPort(): int
     {
-        return 80;
+        return self::DEFAULT_PORT;
     }
 
     public function getCipher(): CipherInterface
     {
         return new Cipher(self::BASE_KEY,self::BASE_IV);
     }
+
+
+
+
 }

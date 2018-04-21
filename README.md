@@ -7,31 +7,7 @@ Currently supported only RM Devices
 
 Discover all devices in network:
 ```php
-use TPG\Broadlink\Device\AbstractDevice;
-use TPG\Broadlink\Device\HasTemperatureSensorInterface;
-use TPG\Broadlink\Device\RMDevice;
-
-$devices = AbstractDevice::discover();
-$response=[];
-foreach ($devices as $device){
-    
-    $device->authenticate();
-    
-    $deviceResponse = [
-        'model' => $device->getModel(),
-        'name' => $device->getName(),
-        'ip' => $device->getIP(),
-        'mac' => $device->getMac(),
-    ];
-    
-    if($device instanceof HasTemperatureSensorInterface){
-        $deviceResponse['temperature'] = sprintf("%01.1f",$device->getTemperature());
-    }
-    
-    $response[] = $deviceResponse;
-}
-
-echo json_encode($response);
+echo json_encode(\TPG\Broadlink\Broadlink::discover());
 ```
 Will produce:
 ```json
@@ -41,25 +17,22 @@ Will produce:
         "name": "Living Room",
         "ip": "192.168.88.15",
         "mac": "34:ea:cc:cc:cc:bc",
-        "temperature": "22.0"
+        "id": "10026"
+        
     },
     {
         "model": "RM2 Pro Plus",
         "name": "Sleeping Room",
         "ip": "192.168.88.14",
         "mac": "34:ea:cc:cc:cc:bf",
-        "temperature": "21.7"
+        "id": "10026"
     }
 ]
 ```
 
 Use already known device:
 ```php
-use TPG\Broadlink\Device\RMDevice;
-
-$device = new RMDevice('192.168.88.15','34:ea:cc:cc:cc:bc');
-$device->authenticate();
-echo $device->getTemperature();
+\TPG\Broadlink\Device\RMDevice::authenticate('192.168.88.15','34:ea:cc:cc:cc:bc')->getTemperature()
 ```
 
 ### Draft implementation of Broadlink Catalog Cloud

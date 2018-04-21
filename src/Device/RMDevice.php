@@ -3,14 +3,13 @@
 namespace TPG\Broadlink\Device;
 
 
+use TPG\Broadlink\Command\GetSensorsCommand;
+use TPG\Broadlink\Protocol;
 
-use TPG\Broadlink\Request\CheckSensorsRequest;
-use TPG\Broadlink\Response\CheckSensorsResponse;
-
-class RMDevice extends AbstractDevice implements HasTemperatureSensorInterface
+class RMDevice extends AuthenticatedDevice
 {
-    public function getTemperature():float {
-        /** @var CheckSensorsResponse $response */
-        return $this->executeRequest(new CheckSensorsRequest())->getTemperature();
+
+    public function getTemperature(){
+        return Protocol::create()->executeCommand(new GetSensorsCommand($this))->current()['temperature'];
     }
 }

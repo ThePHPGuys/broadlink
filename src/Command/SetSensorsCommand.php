@@ -8,16 +8,20 @@ use TPG\Broadlink\Device\DeviceInterface;
 use TPG\Broadlink\Packet\Packet;
 use TPG\Broadlink\Packet\PacketBuilder;
 
-class GetSensorsCommand implements EncryptedCommandInterface
+class SetSensorsCommand implements EncryptedCommandInterface
 {
     /**
      * @var Device
      */
     private $device;
 
+    /** @var PacketBuilder */
+    private $packetBuilder;
+
     public function __construct(AuthenticatedDevice $device)
     {
         $this->device = $device;
+        $this->packetBuilder = PacketBuilder::create(0x16);
     }
 
     public function getCommandId(): int
@@ -35,9 +39,14 @@ class GetSensorsCommand implements EncryptedCommandInterface
         return $this->device;
     }
 
+    public function getPacketBuilder(): PacketBuilder
+    {
+        return $this->packetBuilder;
+    }
+
     public function getPayload(): Packet
     {
-        return PacketBuilder::create(0x16)->writeByte(0x00,0x01)->getPacket();
+        return $this->packetBuilder->getPacket();
     }
 
 }

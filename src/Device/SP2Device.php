@@ -16,7 +16,7 @@ class SP2Device extends AuthenticatedDevice
         );
     }
 
-    public function checkNightlight() {
+    public function checkNightLight() {
         return in_array(
             $this->executeGetSensorCommand(),
             [2, 3, 255]
@@ -25,7 +25,7 @@ class SP2Device extends AuthenticatedDevice
 
     public function getEnergy() {
         /** @var PacketBuilder $pack */
-        $packetBuilder = Protocol::create()->executeCommand(new GetEnergyCommand($this))->current();
+        $packetBuilder = $this->executeCommand(new GetEnergyCommand($this));
 
         return (
             dechex($packetBuilder->readByte(0x7)) * 10000 +
@@ -39,7 +39,7 @@ class SP2Device extends AuthenticatedDevice
         $packetBuilder = $command->getPacketBuilder();
         $packetBuilder->writeByte(0x00, 0x02);
 
-        if ($this->checkNightlight()) {
+        if ($this->checkNightLight()) {
             $packetBuilder->writeByte(0x04, $state ? 3 : 2);
         } else {
             $packetBuilder->writeByte(0x04, $state ? 1 : 0);

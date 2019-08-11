@@ -13,7 +13,6 @@ use TPG\Broadlink\Device\DiscoveredDevice;
 
 class Broadlink
 {
-
     /**
      * Return all devices in current network
      * @return DiscoveredDevice[]

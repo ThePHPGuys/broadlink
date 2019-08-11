@@ -71,7 +71,7 @@ class DiscoveredDevice implements DeviceInterface, \JsonSerializable
     }
 
     private static function getModelByDeviceId($deviceId){
-        switch ($deviceId){
+        switch ($deviceId) {
             case 0:
                 return 'SP1';
             case 0x2711:
@@ -85,6 +85,8 @@ class DiscoveredDevice implements DeviceInterface, \JsonSerializable
                 return 'SPMini';
             case 0x753e:
                 return 'SP3';
+            case 0x7D0:
+                return 'OEM branded SP3';
             case 0x2728:
                 return 'SPMini2';
             case 0x2733:
@@ -132,12 +134,34 @@ class DiscoveredDevice implements DeviceInterface, \JsonSerializable
         }
     }
 
-    private function getDeviceClass(){
-        return AuthenticatedDevice::class;
+    private function getDeviceClass() {
+        switch ($this->getId()) {
+            case 0x2711:
+            case 0x2719:
+            case 0x7919:
+            case 0x271a:
+            case 0x791a:
+            case 0x2720:
+            case 0x753e:
+            case 0x7D0:
+                return SP2Device::class;
+            case 0x2712:
+            case 0x2737:
+            case 0x273d:
+            case 0x2783:
+            case 0x277c:
+            case 0x272a:
+            case 0x2787:
+            case 0x278b:
+            case 0x278f:
+                return RMDevice::class;
+            default:
+                return AuthenticatedDevice::class;
+        }
     }
 
-    public function authenticate(){
-        return Broadlink::authenticate($this,$this->getDeviceClass());
+    public function authenticate() {
+        return Broadlink::authenticate($this, $this->getDeviceClass());
     }
 
 }

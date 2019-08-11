@@ -8,7 +8,7 @@ use TPG\Broadlink\Device\DeviceInterface;
 use TPG\Broadlink\Packet\Packet;
 use TPG\Broadlink\Packet\PacketBuilder;
 
-class GetSensorsCommand implements EncryptedCommandInterface
+class GetEnergyCommand implements EncryptedCommandInterface
 {
     /**
      * @var Device
@@ -37,7 +37,14 @@ class GetSensorsCommand implements EncryptedCommandInterface
 
     public function getPayload(): Packet
     {
-        return PacketBuilder::create(0x16)->writeByte(0x00,0x01)->getPacket();
+        return PacketBuilder::create(0x16)
+            ->writeByte(0x00, 0x08)
+            ->writeByte(0x02, 0xFE)
+            ->writeByte(0x03, 0x01)
+            ->writeByte(0x04, 0x05)
+            ->writeByte(0x05, 0x01)
+            ->writeByte(0x09, 0x2D)
+            ->getPacket();
     }
 
 }

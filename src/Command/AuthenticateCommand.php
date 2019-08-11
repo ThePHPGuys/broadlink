@@ -21,7 +21,6 @@ class AuthenticateCommand implements EncryptedCommandInterface
 
     public function __construct(DeviceInterface $device, $authenticatedClass = AuthenticatedDevice::class)
     {
-
         $this->device = $device;
         $this->authenticatedClass = $authenticatedClass;
     }
@@ -36,12 +35,12 @@ class AuthenticateCommand implements EncryptedCommandInterface
         return Packet::createZeroPacket(0x50);
     }
 
-    public function handleResponse(Packet $packet):AuthenticatedDevice
+    public function handleResponse(Packet $packet): AuthenticatedDevice
     {
         $packetBuilder = new PacketBuilder($packet);
         $sessionId = $packetBuilder->readInt32(0x00);
-        $key = array_reverse($packetBuilder->readBytes(0x04,16));
-        return new $this->authenticatedClass($this->device,$sessionId,$key);
+        $key = array_reverse($packetBuilder->readBytes(0x04, 16));
+        return new $this->authenticatedClass($this->device, $sessionId, $key);
     }
 
     public function getDevice(): DeviceInterface
